@@ -20,7 +20,7 @@ export const propertyAgentCreateSchema = z.object({
 });
 
 
-export const propertyAgentUpdateSchema = propertyAgentCreateSchema.partial();
+export const propertyAgentUpdateSchema = propertyAgentCreateSchema.deepPartial();
 
 
 
