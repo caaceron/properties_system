@@ -56,7 +56,6 @@ html {
   line-height: 1.2;
   margin: 0;
 }
-
 .main-content {
   flex: 1;
   padding: 2rem;
