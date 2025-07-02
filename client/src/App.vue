@@ -51,7 +51,7 @@ html {
 }
 
 .sidebar h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   line-height: 1.2;
   margin: 0;
@@ -68,8 +68,7 @@ html {
 
 @media (max-width: 992px) {
   .app-layout {
-    display: flex;
-    min-height: 100vh;
+    flex-direction: column;
   }
   .sidebar {
     flex: 0 0 auto;
@@ -78,5 +77,28 @@ html {
   .main-content {
     padding: 1.5rem;
   }
+}
+
+@media (max-width: 600px) {
+    .app-layout {
+        scroll-behavior: auto;
+        min-height: 110vh;
+    }
+
+    .sidebar {
+      min-height: 150px;
+    }
+    .sidebar h1,
+    .main-content .form-title {
+      font-size: 1.5rem;
+    }
+
+    .main-content {
+      padding: 1rem;
+      flex: unset;
+    }
+    .main-content .agent-form-container {
+      padding: 1rem;
+    }
 }
 </style>

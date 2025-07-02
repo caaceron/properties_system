@@ -122,8 +122,44 @@ All API endpoints are prefixed with `http://localhost:3000`.
 - **Body (raw JSON)**:
   ```json
   {
-    "firstName": "Idea",
-    "lastName": "AngelPanda",
-    "email": "ideaAngelPanda@gmail.com",
+    "firstName": "Jhonny",
+    "lastName": "Bravo",
+    "email": "jhonny.bravo@gmail.com",
     "mobileNumber": "123-456-7890"
   }
+
+### 4. Update an Agent
+
+-   **Method**: `PUT`
+-   **URL**: `http://localhost:3000/agents/:id`
+-   **Body** (raw JSON, only include fields to update):
+    ```json
+    {
+        "mobileNumber": "111-222-3333"
+    }
+    ```
+-   **cURL**:
+    ```bash
+    curl -X PUT -H "Content-Type: application/json" -d '{"mobileNumber":"111-222-3333"}' http://localhost:3000/agents/your-agent-id
+    ```
+
+### 5. Delete an Agent
+
+-   **Method**: `DELETE`
+-   **URL**: `http://localhost:3000/agents/:id`
+-   **cURL**: `curl -X DELETE http://localhost:3000/agents/your-agent-id`
+
+---
+
+## Stretch Goal Implementation
+
+**Identified Improvement**: Robust Server-Side Input Validation.
+
+**Reasoning**: While the client can provide basic validation (e.g., `required` fields), an application should never trust the client. The backend must be the ultimate authority on data integrity. Without server-side validation, malicious or malformed requests could corrupt the data store or cause unexpected crashes.
+
+**Implementation**: I have integrated the `zod` library to create strongly-typed schemas for both creating and updating agents. This ensures that:
+-   All required fields are present on creation.
+-   Data types are correct (e.g., `email` is a valid email format).
+-   The API returns clear, specific error messages detailing which fields failed validation, allowing the frontend to provide a better user experience.
+
+This makes the API more secure, resilient, and easier to debug.
