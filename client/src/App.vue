@@ -81,7 +81,7 @@ html {
 @media (max-width: 600px) {
     .app-layout {
         scroll-behavior: auto;
-        min-height: 110vh;
+        min-height: 130vh;
     }
 
     .sidebar {
