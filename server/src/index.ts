@@ -10,23 +10,21 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 
+interface IdParam { id: string; }
 interface CreateAgentBody {
   firstName: string;
   lastName: string;
   email: string;
   mobileNumber: string;
 }
-interface IdParam {
-  id: string;
-}
 
 // GET Agents
-app.get('/agents', (req: Request, res: Response) => {
+app.get('/agents', (req, res) => {
   res.json(Array.from(db.agents.values()));
 });
 
 // GET Agent by ID
-app.get('/agents/:id', (req: Request<IdParam>, res: Response) => {
+app.get('/agents/:id', (req, res) => {
   const agent = db.agents.get(req.params.id);
   if (!agent) {
     return res.status(404).json({ message: 'Agent not found' });
@@ -35,51 +33,42 @@ app.get('/agents/:id', (req: Request<IdParam>, res: Response) => {
 });
 
 // CREATE Agent
-app.post(
-  '/agents', 
-  validate(propertyAgentCreateSchema),
-  (req: Request<{}, {}, CreateAgentBody>, res: Response) => {
-    const { firstName, lastName, email, mobileNumber } = req.body;
+app.post('/agents', validate(propertyAgentCreateSchema), (req, res) => {
+  const { firstName, lastName, email, mobileNumber } = req.body;
 
-    const newAgent: PropertyAgent = {
-      id: uuidv4(),
-      firstName,
-      lastName,
-      email,
-      mobileNumber,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
+  const newAgent: PropertyAgent = {
+    id: uuidv4(),
+    firstName,
+    lastName,
+    email,
+    mobileNumber,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
 
-    db.agents.set(newAgent.id, newAgent);
-    res.status(201).json(newAgent);
-  }
-);
+  db.agents.set(newAgent.id, newAgent);
+  res.status(201).json(newAgent);
+});
 
 // UPDATE existing Agent
-app.put('/agents/:id', 
-  validate(propertyAgentUpdateSchema), 
-  (req: Request<IdParam, {}, Partial<CreateAgentBody>>, res: Response) => {
+app.put('/agents/:id', validate(propertyAgentUpdateSchema), (req, res) => {
+  const agent = db.agents.get(req.params.id);
 
-    const agent = db.agents.get(req.params.id);
-
-    if (!agent) {
-      return res.status(404).json({ message: 'Agent not found!' });
-    }
-
-    const updatedAgent = { ...agent, ...req.body, updatedAt: new Date() };
-    
-    db.agents.set(req.params.id, updatedAgent);
-    
-    res.status(200).json({
-      message: `Agent "${updatedAgent.firstName} ${updatedAgent.lastName}" was successfully updated.`,
-      data: updatedAgent
-    });
+  if (!agent) {
+    return res.status(404).json({ message: 'Agent not found!' });
   }
-);
+
+  const updatedAgent = { ...agent, ...req.body, updatedAt: new Date() };
+  db.agents.set(req.params.id, updatedAgent);
+  
+  res.status(200).json({
+    message: `Agent "${updatedAgent.firstName} ${updatedAgent.lastName}" was successfully updated.`,
+    data: updatedAgent
+  });
+});
 
 // DELETE Agent
-app.delete('/agents/:id', (req: Request<IdParam>, res: Response) => {
+app.delete('/agents/:id', (req, res) => {
   const agentToDelete = db.agents.get(req.params.id);
 
   if (!agentToDelete) {
