@@ -17,19 +17,19 @@ const agentsData = [
     firstName: 'Angel',
     lastName: 'Aceron',
     email: 'claireangelaceron@gmail.com',
-    mobileNumber: '919-456-3613',
+    mobileNumber: '+63 912 345 671',
   },
   { 
     firstName: 'John',
     lastName: 'Doe',
     email: 'john.doe@example.com',
-    mobileNumber: '123-456-7890',
+    mobileNumber: '+63 912 345 672',
   },
   { 
     firstName: 'Jane',
     lastName: 'Smith',
     email: 'jane.smith@example.com',
-    mobileNumber: '987-654-3210',
+    mobileNumber: '+63 912 345 673',
   }
 ];
 

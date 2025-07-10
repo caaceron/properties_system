@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import AgentForm from './components/AgentForm.vue';
+  import AgentForm from './components/AgentForm.vue';
 </script>
 
 <style>

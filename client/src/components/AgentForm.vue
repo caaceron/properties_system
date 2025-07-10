@@ -199,6 +199,12 @@ const handleSubmit = async () => {
 };
 </script>
 
+<script lang="ts">
+export default {
+  name: 'AgentForm',
+};
+</script>
+
 <style scoped>
   .form-fieldset:disabled {
     opacity: 0.6;

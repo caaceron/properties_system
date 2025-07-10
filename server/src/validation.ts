@@ -1,6 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import { z, AnyZodObject, ZodError } from 'zod';
 
+const phoneRegexWithSpaces = new RegExp(
+  /^\+[\d\s]{10,20}$/
+);
+
 export const propertyAgentCreateSchema = z.object({
   body: z.object({
     firstName: z.string({
@@ -15,7 +19,16 @@ export const propertyAgentCreateSchema = z.object({
       required_error: 'Email is required',
     }).email({ message: "A valid email is required" }),
     
-    mobileNumber: z.string().optional(),
+    mobileNumber: z.string()
+      .optional()
+      .transform(val => val || "")
+      .refine(val => {
+        if (val === "") return true; 
+        
+        return phoneRegexWithSpaces.test(val);
+      }, {
+        message: "Invalid international phone number format."
+      }),
   })
 });
 
